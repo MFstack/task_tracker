@@ -21,3 +21,7 @@ def add_task():
     db.session.add(task)
     db.session.commit()
     return jsonify({'message': 'Task added successfully'}), 201
+
+@app.route('/')
+def home():
+    return "Welcome to Task Tracker!"
