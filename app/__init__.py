@@ -9,7 +9,8 @@ import os
 app = Flask(__name__)
 
 # Load configuration from the config module
-app.config.from_object('config.Config')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy and Flask-Migrate
 db = SQLAlchemy(app)
@@ -89,6 +90,10 @@ def delete_task(task_id):
     db.session.delete(task)
     db.session.commit()
     return jsonify({'message': 'Task deleted successfully'}), 200
+
+@app.route('/')
+def home():
+    return "Welcome to Task Tracker!"
 
 # Import routes and models (if necessary for additional modules)
 from app import routes, models
